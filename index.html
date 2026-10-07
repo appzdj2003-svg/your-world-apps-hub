@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Your World Apps — Command Deck</title>
+<link rel="icon" href="assets/yw-apps-icon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/yw-apps-icon.png">
 <meta name="description" content="Your World Apps command deck: Weather Radar early storm alerts and Close-One, Hunt AI public-land maps, and Your World Market. Get them on Google Play.">
 <style>
   :root {
@@ -212,7 +214,7 @@
     border-radius: 24px;
     background: var(--panel);
     overflow: hidden;
-    scroll-margin-top: 72px;
+    scroll-margin-top: 96px;
   }
   .station-head {
     display: flex;
@@ -635,17 +637,98 @@
     position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
     overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
   }
+  html { scroll-padding-top: 88px; }
+
+  /* Keep demo controls above chrome / clickable */
+  .chips button, .parcel, .msg-btn, .phone-screen {
+    position: relative;
+    z-index: 1;
+    pointer-events: auto;
+    -webkit-tap-highlight-color: rgba(30, 224, 198, 0.25);
+    touch-action: manipulation;
+  }
+  .chips {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .chips button {
+    flex: unset;
+    min-width: 0;
+    padding: 8px 6px;
+    font-size: 0.82rem;
+  }
+
+  /* Hunt layer modes — dramatic visual change */
+  .hunt-map[data-layer="public"] .parcel { opacity: 0.35; }
+  .hunt-map[data-layer="public"] .parcel[aria-pressed="true"] {
+    opacity: 1;
+    background: rgba(61,214,140,0.45);
+  }
+  .hunt-map[data-layer="parcels"] .parcel {
+    opacity: 1;
+    border-style: dashed;
+  }
+  .hunt-map[data-layer="trail"] .parcel { opacity: 0.25; }
+  .hunt-map[data-layer="trail"] .parcel[aria-pressed="true"] {
+    opacity: 1;
+    background: rgba(246, 226, 122, 0.35);
+    border-color: #f6e27a;
+    box-shadow: 0 0 0 2px #f6e27a;
+  }
+  .hunt-map .trail-dot {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #f6e27a;
+    box-shadow: 0 0 0 4px rgba(246,226,122,0.35);
+    left: 62%;
+    top: 22%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: 3;
+    pointer-events: none;
+  }
+  .hunt-map[data-layer="trail"] .trail-dot { opacity: 1; }
+  .parcel.is-flash {
+    animation: parcelFlash 0.45s ease;
+  }
+  @keyframes parcelFlash {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.04); filter: brightness(1.35); }
+    100% { transform: scale(1); }
+  }
+  .you-pin { pointer-events: none; z-index: 2; }
+
+  /* Market chart + ticker feedback */
+  .tick.is-active {
+    border-color: var(--market) !important;
+    box-shadow: 0 0 0 2px rgba(126,182,255,0.35);
+  }
+  .chart svg #mktLine {
+    transition: opacity 0.15s ease;
+  }
+  .chart.is-updating #mktLine { opacity: 0.25; }
+  .insight.is-pulse {
+    border: 1px solid var(--market);
+    box-shadow: 0 0 0 3px rgba(126,182,255,0.18);
+  }
+
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .sweep, .ticker-track { animation: none; }
     .blob, .draft, .parcel { transition: none; }
+    .parcel.is-flash { animation: none; }
   }
 </style>
 </head>
 <body>
 <header class="deck-bar">
   <a class="brand" href="#bridge">
-    <img src="assets/weather-icon.png" width="36" height="36" alt="">
+    <img src="assets/yw-apps-icon.png" width="36" height="36" alt="Your World Apps">
     Your World Apps
   </a>
   <span class="deck-status" aria-live="polite">Command deck · online</span>
@@ -763,7 +846,7 @@
                 <button type="button" id="hunt-parcels" aria-pressed="false">Parcels</button>
                 <button type="button" id="hunt-trail" aria-pressed="false">Trailhead</button>
               </div>
-              <div class="hunt-map" id="huntMap" aria-label="Demo hunt map">
+              <div class="hunt-map" id="huntMap" data-layer="public" aria-label="Demo hunt map">
                 <div class="parcel" id="p1" style="left:12%;top:18%;width:34%;height:28%;" aria-pressed="true" role="button" tabindex="0"></div>
                 <div class="parcel" id="p2" style="left:52%;top:12%;width:30%;height:22%;" aria-pressed="false" role="button" tabindex="0"></div>
                 <div class="parcel" id="p3" style="left:40%;top:48%;width:38%;height:32%;" aria-pressed="false" role="button" tabindex="0"></div>
@@ -823,12 +906,12 @@
               </div>
               <div class="ticker" aria-hidden="true">
                 <div class="ticker-track" id="tickerTrack">
-                  <div class="tick up"><span class="sym">SPY</span> 528.40 <span class="chg">+0.6%</span></div>
-                  <div class="tick down"><span class="sym">QQQ</span> 447.12 <span class="chg">−0.3%</span></div>
-                  <div class="tick up"><span class="sym">IWM</span> 201.88 <span class="chg">+0.9%</span></div>
-                  <div class="tick up"><span class="sym">SPY</span> 528.40 <span class="chg">+0.6%</span></div>
-                  <div class="tick down"><span class="sym">QQQ</span> 447.12 <span class="chg">−0.3%</span></div>
-                  <div class="tick up"><span class="sym">IWM</span> 201.88 <span class="chg">+0.9%</span></div>
+                  <div class="tick up is-active" data-sym="spy"><span class="sym">SPY</span> 528.40 <span class="chg">+0.6%</span></div>
+                  <div class="tick down" data-sym="qqq"><span class="sym">QQQ</span> 447.12 <span class="chg">−0.3%</span></div>
+                  <div class="tick up" data-sym="iwm"><span class="sym">IWM</span> 201.88 <span class="chg">+0.9%</span></div>
+                  <div class="tick up is-active" data-sym="spy"><span class="sym">SPY</span> 528.40 <span class="chg">+0.6%</span></div>
+                  <div class="tick down" data-sym="qqq"><span class="sym">QQQ</span> 447.12 <span class="chg">−0.3%</span></div>
+                  <div class="tick up" data-sym="iwm"><span class="sym">IWM</span> 201.88 <span class="chg">+0.9%</span></div>
                 </div>
               </div>
               <div class="chart" aria-hidden="true">
@@ -891,172 +974,228 @@
 
 <script>
 (function () {
-  var scenarios = {
-    rain: {
-      alert: "Rain is headed toward Mom. Close enough to check in.",
-      eta: "Rain ETA · about 25 minutes",
-      who: "To Mom",
-      msg: "Storm is close to you. I'm checking in. Stay inside if you can.",
-      blob: { x: "62%", y: "40%", s: "78px", c: "#3ec6ff" }
-    },
-    hurricane: {
-      alert: "A hurricane track is nearing Alex. Weather can turn dangerous.",
-      eta: "Closest approach · tonight",
-      who: "To Alex",
-      msg: "The hurricane is getting close to you. I'm checking in. Stay inside if you can.",
-      blob: { x: "34%", y: "58%", s: "120px", c: "#ff6a45" }
-    },
-    lightning: {
-      alert: "Lightning is near Sam. Waiting indoors is the safer call.",
-      eta: "Lightning nearby · now",
-      who: "To Sam",
-      msg: "Lightning is close to you. I'm checking in. Stay inside if you can.",
-      blob: { x: "70%", y: "30%", s: "52px", c: "#f6e27a" }
-    }
-  };
-  var alertEl = document.getElementById("alert");
-  var etaEl = document.getElementById("eta");
-  var whoEl = document.getElementById("who");
-  var msgEl = document.getElementById("msg");
-  var draftEl = document.getElementById("draft");
-  var readyLabel = document.getElementById("readyLabel");
-  var explain = document.getElementById("explain");
-  var blob = document.getElementById("blob");
-  var chips = {
-    rain: document.getElementById("chip-rain"),
-    hurricane: document.getElementById("chip-hurricane"),
-    lightning: document.getElementById("chip-lightning")
-  };
-  function clearReady() {
-    draftEl.classList.remove("ready");
-    readyLabel.hidden = true;
-    explain.hidden = true;
-  }
-  function paint(key) {
-    var data = scenarios[key];
-    alertEl.textContent = data.alert;
-    etaEl.textContent = data.eta;
-    whoEl.textContent = data.who;
-    msgEl.textContent = data.msg;
-    blob.style.setProperty("--x", data.blob.x);
-    blob.style.setProperty("--y", data.blob.y);
-    blob.style.setProperty("--s", data.blob.s);
-    blob.style.setProperty("--c", data.blob.c);
-    Object.keys(chips).forEach(function (name) {
-      chips[name].setAttribute("aria-pressed", name === key ? "true" : "false");
-    });
-    clearReady();
-  }
-  Object.keys(chips).forEach(function (name) {
-    chips[name].addEventListener("click", function () { paint(name); });
-  });
-  document.getElementById("openMsg").addEventListener("click", function () {
-    draftEl.classList.add("ready");
-    readyLabel.hidden = false;
-    explain.hidden = false;
-  });
-  paint("rain");
-})();
-
-(function () {
-  var parcels = {
-    p1: { title: "Parcel A · State wildlife area · walk-in access", note: "Public land overlay. Confirm season dates and local regs." },
-    p2: { title: "Parcel B · Adjacent timber · check boundary", note: "Demo parcel edge. Always respect posted private land." },
-    p3: { title: "Parcel C · Creek bottom · high-traffic trail", note: "Good orientation landmark. Pack out what you pack in." }
-  };
-  var layers = {
-    "hunt-public": { label: "Layer · Public land", focus: "p1" },
-    "hunt-parcels": { label: "Layer · Parcels", focus: "p2" },
-    "hunt-trail": { label: "Layer · Trailhead", focus: "p3" }
-  };
-  var layerEl = document.getElementById("huntLayer");
-  var parcelEl = document.getElementById("huntParcel");
-  var noteEl = document.getElementById("huntNote");
-  var explain = document.getElementById("huntExplain");
-
-  function selectParcel(id) {
-    Object.keys(parcels).forEach(function (pid) {
-      var el = document.getElementById(pid);
-      el.setAttribute("aria-pressed", pid === id ? "true" : "false");
-    });
-    parcelEl.textContent = parcels[id].title;
-    noteEl.textContent = parcels[id].note;
-  }
-  Object.keys(parcels).forEach(function (pid) {
-    var el = document.getElementById(pid);
-    el.addEventListener("click", function () { selectParcel(pid); });
+  function onActivate(el, fn) {
+    if (!el) return;
+    el.addEventListener("click", fn);
     el.addEventListener("keydown", function (e) {
-      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); selectParcel(pid); }
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); fn(e); }
     });
-  });
-  Object.keys(layers).forEach(function (lid) {
-    document.getElementById(lid).addEventListener("click", function () {
-      Object.keys(layers).forEach(function (other) {
-        document.getElementById(other).setAttribute("aria-pressed", other === lid ? "true" : "false");
-      });
-      layerEl.textContent = layers[lid].label;
-      selectParcel(layers[lid].focus);
-      explain.hidden = true;
-    });
-  });
-  document.getElementById("huntPin").addEventListener("click", function () {
-    explain.hidden = false;
-    noteEl.textContent = "Waypoint dropped (demo). In the field kit it would save to your map.";
-  });
-})();
-
-(function () {
-  var symbols = {
-    spy: {
-      label: "SPY · Demo",
-      insight: "Session bias: constructive. Pullbacks toward VWAP are the demo “watch” zone.",
-      points: [20,70, 45,62, 70,66, 95,48, 120,52, 145,40, 170,44, 195,30, 220,36, 245,28, 270,32, 295,22]
-    },
-    qqq: {
-      label: "QQQ · Demo",
-      insight: "Tech tape: mixed. Demo flag = wait for reclaim of the morning high.",
-      points: [20,30, 45,38, 70,34, 95,50, 120,46, 145,58, 170,54, 195,68, 220,60, 245,72, 270,66, 295,78]
-    },
-    iwm: {
-      label: "IWM · Demo",
-      insight: "Small-cap pulse: firm. Demo breadth looks healthier than the majors.",
-      points: [20,80, 45,74, 70,70, 95,62, 120,64, 145,50, 170,46, 195,40, 220,36, 245,30, 270,34, 295,24]
-    }
-  };
-  var line = document.getElementById("mktLine");
-  var dot = document.getElementById("mktDot");
-  var symEl = document.getElementById("mktSym");
-  var insightEl = document.getElementById("mktInsight");
-  var explain = document.getElementById("mktExplain");
-  var chipMap = {
-    spy: document.getElementById("sym-spy"),
-    qqq: document.getElementById("sym-qqq"),
-    iwm: document.getElementById("sym-iwm")
-  };
-  function paint(key) {
-    var data = symbols[key];
-    var pts = data.points;
-    var pairs = [];
-    for (var i = 0; i < pts.length; i += 2) pairs.push(pts[i] + "," + pts[i + 1]);
-    line.setAttribute("points", pairs.join(" "));
-    dot.setAttribute("cx", pts[pts.length - 2]);
-    dot.setAttribute("cy", pts[pts.length - 1]);
-    symEl.textContent = data.label;
-    insightEl.textContent = data.insight;
-    Object.keys(chipMap).forEach(function (name) {
-      chipMap[name].setAttribute("aria-pressed", name === key ? "true" : "false");
-    });
-    explain.hidden = true;
   }
-  Object.keys(chipMap).forEach(function (name) {
-    chipMap[name].addEventListener("click", function () { paint(name); });
-  });
-  document.getElementById("mktPulse").addEventListener("click", function () {
-    explain.hidden = false;
-    insightEl.textContent = insightEl.textContent.replace(/\.$/, "") + " · Pulse check complete (demo).";
-  });
-  paint("spy");
+
+  /* —— Weather —— */
+  (function () {
+    var scenarios = {
+      rain: {
+        alert: "Rain is headed toward Mom. Close enough to check in.",
+        eta: "Rain ETA · about 25 minutes",
+        who: "To Mom",
+        msg: "Storm is close to you. I'm checking in. Stay inside if you can.",
+        blob: { x: "62%", y: "40%", s: "78px", c: "#3ec6ff" }
+      },
+      hurricane: {
+        alert: "A hurricane track is nearing Alex. Weather can turn dangerous.",
+        eta: "Closest approach · tonight",
+        who: "To Alex",
+        msg: "The hurricane is getting close to you. I'm checking in. Stay inside if you can.",
+        blob: { x: "34%", y: "58%", s: "120px", c: "#ff6a45" }
+      },
+      lightning: {
+        alert: "Lightning is near Sam. Waiting indoors is the safer call.",
+        eta: "Lightning nearby · now",
+        who: "To Sam",
+        msg: "Lightning is close to you. I'm checking in. Stay inside if you can.",
+        blob: { x: "70%", y: "30%", s: "52px", c: "#f6e27a" }
+      }
+    };
+    var alertEl = document.getElementById("alert");
+    var etaEl = document.getElementById("eta");
+    var whoEl = document.getElementById("who");
+    var msgEl = document.getElementById("msg");
+    var draftEl = document.getElementById("draft");
+    var readyLabel = document.getElementById("readyLabel");
+    var explain = document.getElementById("explain");
+    var blob = document.getElementById("blob");
+    var chips = {
+      rain: document.getElementById("chip-rain"),
+      hurricane: document.getElementById("chip-hurricane"),
+      lightning: document.getElementById("chip-lightning")
+    };
+    if (!alertEl || !blob || !chips.rain) return;
+
+    function clearReady() {
+      draftEl.classList.remove("ready");
+      readyLabel.hidden = true;
+      explain.hidden = true;
+    }
+    function paint(key) {
+      var data = scenarios[key];
+      if (!data) return;
+      alertEl.textContent = data.alert;
+      etaEl.textContent = data.eta;
+      whoEl.textContent = data.who;
+      msgEl.textContent = data.msg;
+      blob.style.setProperty("--x", data.blob.x);
+      blob.style.setProperty("--y", data.blob.y);
+      blob.style.setProperty("--s", data.blob.s);
+      blob.style.setProperty("--c", data.blob.c);
+      Object.keys(chips).forEach(function (name) {
+        if (chips[name]) chips[name].setAttribute("aria-pressed", name === key ? "true" : "false");
+      });
+      clearReady();
+    }
+    Object.keys(chips).forEach(function (name) {
+      onActivate(chips[name], function () { paint(name); });
+    });
+    onActivate(document.getElementById("openMsg"), function () {
+      draftEl.classList.add("ready");
+      readyLabel.hidden = false;
+      explain.hidden = false;
+    });
+    paint("rain");
+  })();
+
+  /* —— Hunt —— */
+  (function () {
+    var parcels = {
+      p1: { title: "Parcel A · State wildlife area · walk-in access", note: "Public land overlay. Confirm season dates and local regs." },
+      p2: { title: "Parcel B · Adjacent timber · check boundary", note: "Demo parcel edge. Always respect posted private land." },
+      p3: { title: "Parcel C · Creek bottom · high-traffic trail", note: "Good orientation landmark. Pack out what you pack in." }
+    };
+    var layers = {
+      "hunt-public": { label: "Layer · Public land", focus: "p1", mode: "public" },
+      "hunt-parcels": { label: "Layer · Parcels", focus: "p2", mode: "parcels" },
+      "hunt-trail": { label: "Layer · Trailhead", focus: "p3", mode: "trail" }
+    };
+    var mapEl = document.getElementById("huntMap");
+    var layerEl = document.getElementById("huntLayer");
+    var parcelEl = document.getElementById("huntParcel");
+    var noteEl = document.getElementById("huntNote");
+    var explain = document.getElementById("huntExplain");
+    if (!mapEl || !layerEl || !parcelEl) return;
+
+    function selectParcel(id) {
+      if (!parcels[id]) return;
+      Object.keys(parcels).forEach(function (pid) {
+        var el = document.getElementById(pid);
+        if (!el) return;
+        el.setAttribute("aria-pressed", pid === id ? "true" : "false");
+        if (pid === id) {
+          el.classList.remove("is-flash");
+          void el.offsetWidth;
+          el.classList.add("is-flash");
+        }
+      });
+      parcelEl.textContent = parcels[id].title;
+      noteEl.textContent = parcels[id].note;
+    }
+
+    function setLayer(lid) {
+      var meta = layers[lid];
+      if (!meta) return;
+      Object.keys(layers).forEach(function (other) {
+        var btn = document.getElementById(other);
+        if (btn) btn.setAttribute("aria-pressed", other === lid ? "true" : "false");
+      });
+      mapEl.setAttribute("data-layer", meta.mode);
+      layerEl.textContent = meta.label;
+      selectParcel(meta.focus);
+      if (explain) explain.hidden = true;
+    }
+
+    Object.keys(parcels).forEach(function (pid) {
+      onActivate(document.getElementById(pid), function () { selectParcel(pid); });
+    });
+    Object.keys(layers).forEach(function (lid) {
+      onActivate(document.getElementById(lid), function () { setLayer(lid); });
+    });
+    onActivate(document.getElementById("huntPin"), function () {
+      if (explain) explain.hidden = false;
+      noteEl.textContent = "Waypoint dropped (demo). In the field kit it would save to your map.";
+    });
+    setLayer("hunt-public");
+  })();
+
+  /* —— Market —— */
+  (function () {
+    var symbols = {
+      spy: {
+        label: "SPY · Demo",
+        insight: "Session bias: constructive. Pullbacks toward VWAP are the demo watch zone.",
+        points: [20,70, 45,62, 70,66, 95,48, 120,52, 145,40, 170,44, 195,30, 220,36, 245,28, 270,32, 295,22]
+      },
+      qqq: {
+        label: "QQQ · Demo",
+        insight: "Tech tape: mixed. Demo flag = wait for reclaim of the morning high.",
+        points: [20,30, 45,38, 70,34, 95,50, 120,46, 145,58, 170,54, 195,68, 220,60, 245,72, 270,66, 295,78]
+      },
+      iwm: {
+        label: "IWM · Demo",
+        insight: "Small-cap pulse: firm. Demo breadth looks healthier than the majors.",
+        points: [20,80, 45,74, 70,70, 95,62, 120,64, 145,50, 170,46, 195,40, 220,36, 245,30, 270,34, 295,24]
+      }
+    };
+    var line = document.getElementById("mktLine");
+    var dot = document.getElementById("mktDot");
+    var symEl = document.getElementById("mktSym");
+    var insightEl = document.getElementById("mktInsight");
+    var explain = document.getElementById("mktExplain");
+    var chart = document.querySelector("#market .chart");
+    var insightBox = document.querySelector("#market .insight");
+    var chipMap = {
+      spy: document.getElementById("sym-spy"),
+      qqq: document.getElementById("sym-qqq"),
+      iwm: document.getElementById("sym-iwm")
+    };
+    var current = "spy";
+    if (!line || !dot || !symEl || !chipMap.spy) return;
+
+    function highlightTicks(key) {
+      document.querySelectorAll("#tickerTrack .tick").forEach(function (t) {
+        t.classList.toggle("is-active", t.getAttribute("data-sym") === key);
+      });
+    }
+
+    function paint(key) {
+      var data = symbols[key];
+      if (!data) return;
+      current = key;
+      var pts = data.points;
+      var pairs = [];
+      for (var i = 0; i < pts.length; i += 2) pairs.push(pts[i] + "," + pts[i + 1]);
+      if (chart) chart.classList.add("is-updating");
+      window.setTimeout(function () {
+        line.setAttribute("points", pairs.join(" "));
+        dot.setAttribute("cx", pts[pts.length - 2]);
+        dot.setAttribute("cy", pts[pts.length - 1]);
+        if (chart) chart.classList.remove("is-updating");
+      }, 120);
+      symEl.textContent = data.label;
+      insightEl.textContent = data.insight;
+      if (insightBox) insightBox.classList.remove("is-pulse");
+      Object.keys(chipMap).forEach(function (name) {
+        if (chipMap[name]) chipMap[name].setAttribute("aria-pressed", name === key ? "true" : "false");
+      });
+      highlightTicks(key);
+      if (explain) explain.hidden = true;
+    }
+
+    Object.keys(chipMap).forEach(function (name) {
+      onActivate(chipMap[name], function () { paint(name); });
+    });
+    onActivate(document.getElementById("mktPulse"), function () {
+      if (explain) explain.hidden = false;
+      if (insightBox) {
+        insightBox.classList.remove("is-pulse");
+        void insightBox.offsetWidth;
+        insightBox.classList.add("is-pulse");
+      }
+      var base = symbols[current].insight;
+      insightEl.textContent = base.replace(/\.$/, "") + " · Pulse check complete (demo).";
+    });
+    paint("spy");
+  })();
 })();
+</script>
 </script>
 </body>
 </html>
