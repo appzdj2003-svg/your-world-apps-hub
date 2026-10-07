@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your World Apps — Command Deck</title>
+<meta name="description" content="Your World Apps command deck: Weather Radar early storm alerts and Close-One, Hunt AI public-land maps, and Your World Market. Get them on Google Play.">
+<style>
+  :root {
+    --bg: #040a12;
+    --panel: #081624;
+    --panel-2: #0c1c2e;
+    --text: #e8f7ff;
+    --muted: #a8c0d4;
+    --accent: #1ee0c6;
+    --ink: #04140f;
+    --warn: #ff8a5c;
+    --hunt: #3dd68c;
+    --market: #7eb6ff;
+    --line: rgba(30, 224, 198, 0.22);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    background:
+      radial-gradient(ellipse 90% 50% at 50% -10%, rgba(30,224,198,0.12), transparent 55%),
+      radial-gradient(ellipse 60% 40% at 100% 30%, rgba(126,182,255,0.08), transparent 50%),
+      var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+  }
+  a { color: var(--accent); }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  /* —— Command deck chrome —— */
+  .deck-bar {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 10px 16px;
+    background: rgba(4, 10, 18, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--text);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .brand img {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 1px solid var(--line);
+  }
+  .deck-status {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(30,224,198,0.4);
+    border-radius: 999px;
+    padding: 4px 10px;
+  }
+  .deck-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-left: auto;
+  }
+  .deck-nav a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 650;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+  }
+  .deck-nav a:hover {
+    color: var(--text);
+    border-color: rgba(197,215,230,0.25);
+  }
+  .cta-mini {
+    background: var(--accent) !important;
+    color: var(--ink) !important;
+    border-color: var(--accent) !important;
+  }
+
+  main { max-width: 1080px; margin: 0 auto; padding: 28px 16px 64px; }
+
+  /* —— Opening: you are on the deck —— */
+  .bridge {
+    position: relative;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: 28px 20px 24px;
+    background:
+      linear-gradient(180deg, rgba(8,22,36,0.95), rgba(6,14,24,0.98)),
+      repeating-linear-gradient(90deg, transparent, transparent 47px, rgba(30,224,198,0.04) 48px);
+    overflow: hidden;
+    margin-bottom: 28px;
+  }
+  .bridge::before {
+    content: "";
+    position: absolute;
+    inset: auto -20% -40% 40%;
+    height: 180px;
+    background: radial-gradient(circle, rgba(30,224,198,0.18), transparent 65%);
+    pointer-events: none;
+  }
+  .kicker {
+    margin: 0 0 10px;
+    color: var(--accent);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .bridge h1 {
+    position: relative;
+    margin: 0 0 12px;
+    font-size: clamp(1.85rem, 6vw, 2.75rem);
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+  }
+  .bridge .lead {
+    position: relative;
+    margin: 0 0 18px;
+    max-width: 42rem;
+    color: var(--muted);
+    font-size: 1.05rem;
+  }
+  .hero-actions {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 48px;
+    padding: 12px 20px;
+    border-radius: 14px;
+    font-weight: 800;
+    font-size: 1rem;
+    text-decoration: none;
+    border: 0;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .btn-primary { background: var(--accent); color: var(--ink); }
+  .btn-primary:hover { filter: brightness(1.06); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid rgba(197,215,230,0.35);
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-block { width: 100%; margin-top: 14px; }
+  .btn-hunt { background: var(--hunt); color: #04140f; }
+  .btn-market { background: var(--market); color: #06101c; }
+
+  .telemetry {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 20px;
+  }
+  @media (max-width: 640px) {
+    .telemetry { grid-template-columns: 1fr; }
+  }
+  .tel-chip {
+    border: 1px solid rgba(197,215,230,0.16);
+    border-radius: 12px;
+    padding: 10px 12px;
+    background: rgba(12,28,46,0.7);
+  }
+  .tel-chip strong {
+    display: block;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2px;
+  }
+  .tel-chip span { color: var(--muted); font-size: 0.9rem; }
+
+  /* —— Stations —— */
+  .stations { display: flex; flex-direction: column; gap: 28px; }
+  .station {
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    background: var(--panel);
+    overflow: hidden;
+    scroll-margin-top: 72px;
+  }
+  .station-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 20px 18px 8px;
+  }
+  .station-head img {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    object-fit: cover;
+    border: 1px solid var(--line);
+    flex-shrink: 0;
+  }
+  .station-head h2 {
+    margin: 0 0 4px;
+    font-size: clamp(1.25rem, 3.5vw, 1.55rem);
+    letter-spacing: -0.02em;
+  }
+  .station-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(30,224,198,0.35);
+    border-radius: 999px;
+    padding: 2px 8px;
+    margin-bottom: 6px;
+  }
+  .station.hunt .station-tag { color: var(--hunt); border-color: rgba(61,214,140,0.4); }
+  .station.market .station-tag { color: var(--market); border-color: rgba(126,182,255,0.4); }
+  .pitch {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.98rem;
+  }
+  .station-body {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 8px 18px 20px;
+  }
+  @media (min-width: 860px) {
+    .station-body {
+      grid-template-columns: 1.05fr 0.95fr;
+      align-items: start;
+    }
+  }
+  .copy-col .bullets {
+    margin: 14px 0 0;
+    padding-left: 18px;
+    color: var(--muted);
+  }
+  .copy-col .bullets li { margin: 7px 0; }
+  .demo-note {
+    margin: 0 0 10px;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  /* Phone frame */
+  .phone-frame {
+    border-radius: 28px;
+    background: #050d16;
+    border: 2px solid rgba(197,215,230,0.22);
+    box-shadow:
+      0 0 0 1px rgba(30,224,198,0.08),
+      0 24px 48px rgba(0,0,0,0.45);
+    padding: 10px 10px 14px;
+    max-width: 360px;
+    margin: 0 auto;
+  }
+  .notch {
+    width: 36%;
+    height: 8px;
+    margin: 2px auto 10px;
+    border-radius: 999px;
+    background: #122033;
+  }
+  .phone-screen {
+    border-radius: 18px;
+    background: var(--panel-2);
+    border: 1px solid rgba(197,215,230,0.12);
+    padding: 12px;
+    min-height: 320px;
+  }
+  .phone-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+  .tag {
+    border: 1px solid rgba(30,224,198,0.45);
+    color: var(--accent);
+    border-radius: 999px;
+    padding: 2px 8px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-size: 0.68rem;
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .chips button {
+    flex: 1 1 88px;
+    min-height: 40px;
+    border-radius: 999px;
+    border: 1px solid rgba(197,215,230,0.35);
+    background: transparent;
+    color: var(--text);
+    font-weight: 700;
+    font-size: 0.9rem;
+    font-family: inherit;
+    cursor: pointer;
+  }
+  .chips button[aria-pressed="true"] {
+    background: var(--accent);
+    color: var(--ink);
+    border-color: var(--accent);
+  }
+  .station.hunt .chips button[aria-pressed="true"] {
+    background: var(--hunt);
+    border-color: var(--hunt);
+  }
+  .station.market .chips button[aria-pressed="true"] {
+    background: var(--market);
+    border-color: var(--market);
+    color: #06101c;
+  }
+  .msg-btn {
+    width: 100%;
+    margin-top: 10px;
+    min-height: 44px;
+    border: 0;
+    border-radius: 12px;
+    background: #16324a;
+    color: var(--text);
+    font-weight: 700;
+    font-size: 0.95rem;
+    font-family: inherit;
+    cursor: pointer;
+  }
+  .msg-btn:hover { background: #1b3d59; }
+  .alert { margin: 0 0 4px; font-weight: 700; color: var(--text); }
+  .eta { margin: 0 0 10px; font-size: 0.9rem; color: var(--muted); }
+  .draft {
+    border-radius: 14px;
+    background: #10263a;
+    padding: 12px;
+    border: 1px solid transparent;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .draft.ready {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(30,224,198,0.18);
+  }
+  .to { margin: 0 0 4px; font-size: 0.8rem; color: var(--accent); font-weight: 700; }
+  .msg { margin: 0; color: var(--text); font-size: 0.92rem; }
+  .ready-label {
+    margin: 8px 0 0;
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: var(--ink);
+    background: var(--accent);
+    display: inline-block;
+    border-radius: 999px;
+    padding: 3px 8px;
+  }
+  .explain { margin: 8px 0 0; font-size: 0.85rem; color: var(--muted); }
+
+  /* Weather radar widget */
+  .radar-wrap { display: grid; justify-items: center; margin: 4px 0 12px; }
+  .radar {
+    position: relative;
+    width: min(100%, 220px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(30,224,198,0.08), transparent 62%),
+      #071422;
+    border: 1px solid rgba(30,224,198,0.4);
+  }
+  .ring {
+    position: absolute;
+    border: 1px solid rgba(30,224,198,0.22);
+    border-radius: 50%;
+  }
+  .ring.r1 { inset: 16%; }
+  .ring.r2 { inset: 32%; }
+  .ring.r3 { inset: 48%; }
+  .crosshair::before, .crosshair::after {
+    content: "";
+    position: absolute;
+    background: rgba(30,224,198,0.18);
+  }
+  .crosshair::before { left: 50%; top: 8%; bottom: 8%; width: 1px; }
+  .crosshair::after { top: 50%; left: 8%; right: 8%; height: 1px; }
+  .sweep {
+    position: absolute;
+    inset: -2%;
+    border-radius: 50%;
+    background: conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      transparent 292deg,
+      rgba(30,224,198,0.02) 320deg,
+      rgba(30,224,198,0.42) 360deg
+    );
+    animation: spin 4.5s linear infinite;
+  }
+  .blob {
+    position: absolute;
+    width: var(--s);
+    height: var(--s);
+    left: var(--x);
+    top: var(--y);
+    transform: translate(-50%, -50%);
+    border-radius: 46% 54% 48% 52%;
+    background: radial-gradient(circle at 40% 40%, #fff 0%, var(--c) 28%, transparent 72%);
+    opacity: 0.95;
+    transition: left 0.45s ease, top 0.45s ease, width 0.45s ease, height 0.45s ease, background 0.45s ease;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Hunt map */
+  .hunt-map {
+    position: relative;
+    height: 180px;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(61,214,140,0.35);
+    background:
+      linear-gradient(rgba(61,214,140,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(61,214,140,0.06) 1px, transparent 1px),
+      #0a1a12;
+    background-size: 24px 24px, 24px 24px, auto;
+    margin-bottom: 10px;
+  }
+  .parcel {
+    position: absolute;
+    border: 1.5px solid rgba(61,214,140,0.55);
+    background: rgba(61,214,140,0.12);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+  }
+  .parcel[aria-pressed="true"], .parcel:hover {
+    background: rgba(61,214,140,0.32);
+    box-shadow: 0 0 0 2px var(--hunt);
+  }
+  .you-pin {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(30,224,198,0.35);
+    transform: translate(-50%, -50%);
+    left: 48%;
+    top: 58%;
+    z-index: 2;
+  }
+  .hunt-meta {
+    display: grid;
+    gap: 4px;
+    font-size: 0.88rem;
+  }
+  .hunt-meta strong { color: var(--hunt); }
+
+  /* Market ticker */
+  .ticker {
+    display: flex;
+    gap: 8px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .ticker-track {
+    display: flex;
+    gap: 8px;
+    animation: ticker 18s linear infinite;
+    white-space: nowrap;
+  }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .tick {
+    flex: 0 0 auto;
+    border-radius: 10px;
+    border: 1px solid rgba(126,182,255,0.3);
+    background: #102036;
+    padding: 8px 10px;
+    font-size: 0.8rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .tick .sym { font-weight: 800; color: var(--market); }
+  .tick.up .chg { color: #3dd68c; }
+  .tick.down .chg { color: #ff8a5c; }
+  .chart {
+    height: 110px;
+    border-radius: 12px;
+    border: 1px solid rgba(126,182,255,0.28);
+    background: #0a1628;
+    margin-bottom: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+  .chart svg { width: 100%; height: 100%; display: block; }
+  .insight {
+    border-radius: 12px;
+    background: #10263a;
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+  .insight strong { color: var(--market); }
+
+
+  /* Prominent Google Play CTA */
+  .play-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    max-width: 360px;
+    margin: 14px auto 0;
+    min-height: 56px;
+    padding: 12px 18px;
+    border-radius: 14px;
+    text-decoration: none;
+    font-weight: 800;
+    border: 1px solid rgba(30,224,198,0.45);
+    background: linear-gradient(180deg, #0e2438, #081624);
+    color: var(--text);
+    box-shadow: 0 0 0 1px rgba(30,224,198,0.08), 0 12px 28px rgba(0,0,0,0.35);
+    transition: filter 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+  }
+  .play-cta:hover {
+    filter: brightness(1.08);
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+  .play-cta .play-icon {
+    flex: 0 0 auto;
+    width: 28px;
+    height: 28px;
+  }
+  .play-cta .play-copy {
+    text-align: left;
+    line-height: 1.15;
+  }
+  .play-cta .play-copy small {
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .play-cta .play-copy strong {
+    display: block;
+    font-size: 1.05rem;
+    letter-spacing: -0.01em;
+  }
+  .station.hunt .play-cta {
+    border-color: rgba(61,214,140,0.5);
+    box-shadow: 0 0 0 1px rgba(61,214,140,0.1), 0 12px 28px rgba(0,0,0,0.35);
+  }
+  .station.hunt .play-cta:hover { border-color: var(--hunt); }
+  .station.market .play-cta {
+    border-color: rgba(126,182,255,0.5);
+    box-shadow: 0 0 0 1px rgba(126,182,255,0.1), 0 12px 28px rgba(0,0,0,0.35);
+  }
+  .station.market .play-cta:hover { border-color: var(--market); }
+  .station-foot {
+    padding: 0 18px 20px;
+  }
+  .station-foot .play-cta { max-width: none; }
+
+  /* Trust + footer */
+  .trust {
+    margin-top: 32px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+  .trust span {
+    border: 1px solid rgba(197,215,230,0.2);
+    border-radius: 999px;
+    padding: 8px 14px;
+  }
+  footer {
+    margin-top: 28px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(197,215,230,0.12);
+    color: var(--muted);
+    font-size: 0.88rem;
+    text-align: center;
+  }
+  footer p { margin: 6px 0; }
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .sweep, .ticker-track { animation: none; }
+    .blob, .draft, .parcel { transition: none; }
+  }
+</style>
+</head>
+<body>
+<header class="deck-bar">
+  <a class="brand" href="#bridge">
+    <img src="assets/weather-icon.png" width="36" height="36" alt="">
+    Your World Apps
+  </a>
+  <span class="deck-status" aria-live="polite">Command deck · online</span>
+  <nav class="deck-nav" aria-label="Stations">
+    <a href="#weather">Weather</a>
+    <a href="#hunt">Hunt</a>
+    <a href="#market">Market</a>
+    <a class="cta-mini" href="https://play.google.com/store/apps/details?id=com.yourworld.weatheranalyzer">Get Weather Radar</a>
+  </nav>
+</header>
+
+<main>
+  <section class="bridge" id="bridge" aria-labelledby="bridge-title">
+    <p class="kicker">Your World Apps · Command deck</p>
+    <h1 id="bridge-title">You’re on the deck. Pick a station.</h1>
+    <p class="lead">Three live Production apps from Your World Apps — instruments you can try right here, then open on Google Play. Early storm warning. Public-land hunting maps. Market signal, without the noise.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#weather">Engage Weather Radar</a>
+      <a class="btn btn-ghost" href="#hunt">Hunt station</a>
+      <a class="btn btn-ghost" href="#market">Market station</a>
+    </div>
+    <div class="telemetry" aria-label="Deck telemetry">
+      <div class="tel-chip"><strong>WX-01</strong><span>Rain ETA · Close-One · radar</span></div>
+      <div class="tel-chip"><strong>HUNT-01</strong><span>Public land · parcels · field tools</span></div>
+      <div class="tel-chip"><strong>MKT-01</strong><span>Markets · analysis companion</span></div>
+    </div>
+  </section>
+
+  <div class="stations">
+    <!-- WEATHER -->
+    <article class="station weather" id="weather" aria-labelledby="wx-title">
+      <div class="station-head">
+        <img src="assets/weather-icon.png" width="56" height="56" alt="">
+        <div>
+          <span class="station-tag">Station WX-01 · Production</span>
+          <h2 id="wx-title">Your World Weather Radar</h2>
+          <p class="pitch">Beat big weather apps on early warning — then text someone who matters when storms hit. Rain ETA stays free. Close-One, tides, launches, and aircraft are Premium layers.</p>
+        </div>
+      </div>
+      <div class="station-body">
+        <div class="demo-col">
+          <p class="demo-note">Interactive demo — not a live forecast. Tap a scenario, then open the message draft.</p>
+          <div class="phone-frame">
+            <div class="notch" aria-hidden="true"></div>
+            <div class="phone-screen">
+              <div class="phone-top"><span>Close-One</span><span class="tag">Demo</span></div>
+              <div class="chips" role="group" aria-label="Weather scenarios">
+                <button type="button" id="chip-rain" aria-pressed="true">Rain</button>
+                <button type="button" id="chip-hurricane" aria-pressed="false">Hurricane</button>
+                <button type="button" id="chip-lightning" aria-pressed="false">Lightning</button>
+              </div>
+              <div class="radar-wrap">
+                <div class="radar" aria-hidden="true">
+                  <div class="sweep"></div>
+                  <div class="ring r1"></div>
+                  <div class="ring r2"></div>
+                  <div class="ring r3"></div>
+                  <div class="crosshair"></div>
+                  <div class="blob" id="blob"></div>
+                </div>
+              </div>
+              <p class="alert" id="alert"></p>
+              <p class="eta" id="eta"></p>
+              <div class="draft" id="draft">
+                <p class="to" id="who"></p>
+                <p class="msg" id="msg"></p>
+                <p class="ready-label" id="readyLabel" hidden>Ready to send</p>
+              </div>
+              <button type="button" class="msg-btn" id="openMsg">This opens your messages</button>
+              <p class="explain" id="explain" hidden>In the app, this opens your messaging app — you tap Send.</p>
+            </div>
+          </div>
+          <a class="play-cta" href="https://play.google.com/store/apps/details?id=com.yourworld.weatheranalyzer" target="_blank" rel="noopener">
+  <svg class="play-icon" viewBox="0 0 28 28" aria-hidden="true"><path fill="#1ee0c6" d="M5 3.5v21l18-10.5L5 3.5z"/><path fill="#7eb6ff" d="M5 3.5l12.2 9.2L23 13.5 5 3.5z" opacity=".85"/></svg>
+  <span class="play-copy"><small>Get it on</small><strong>Google Play · Weather Radar</strong></span>
+</a>
+        </div>
+        <div class="copy-col">
+          <ul class="bullets">
+            <li>Live rain ETA aimed at <em>you</em> — not a city-wide shrug</li>
+            <li>Close-One drafts a check-in text when weather turns near someone you choose</li>
+            <li>Radar, storms, tides/swell, launches, and aircraft overlays on one map</li>
+            <li>Free for rain ETA and basic radar · Premium unlocks Close-One and advanced layers</li>
+          </ul>
+          <p class="demo-note" style="margin-top:10px">Want the deep dive? <a href="https://appzdj2003-svg.github.io/your-world-weather-radar-site/">Weather Radar detail site</a></p>
+        </div>
+      </div>
+      <div class="station-foot">
+        <a class="play-cta" href="https://play.google.com/store/apps/details?id=com.yourworld.weatheranalyzer" target="_blank" rel="noopener">
+  <svg class="play-icon" viewBox="0 0 28 28" aria-hidden="true"><path fill="#1ee0c6" d="M5 3.5v21l18-10.5L5 3.5z"/><path fill="#7eb6ff" d="M5 3.5l12.2 9.2L23 13.5 5 3.5z" opacity=".85"/></svg>
+  <span class="play-copy"><small>Get it on</small><strong>Google Play · Weather Radar</strong></span>
+</a>
+      </div>
+    </article>
+
+    <!-- HUNT -->
+    <article class="station hunt" id="hunt" aria-labelledby="hunt-title">
+      <div class="station-head">
+        <img src="assets/hunt-icon.svg" width="56" height="56" alt="">
+        <div>
+          <span class="station-tag">Station HUNT-01 · Production</span>
+          <h2 id="hunt-title">Your World Hunt AI</h2>
+          <p class="pitch">Google Maps for hunting — public land, parcels, and field tools that keep you oriented when the trail gets quiet.</p>
+        </div>
+      </div>
+      <div class="station-body">
+        <div class="demo-col">
+          <p class="demo-note">Interactive demo — sample parcels only. Tap a parcel to inspect access notes.</p>
+          <div class="phone-frame">
+            <div class="notch" aria-hidden="true"></div>
+            <div class="phone-screen">
+              <div class="phone-top"><span>Field map</span><span class="tag">Demo</span></div>
+              <div class="chips" role="group" aria-label="Map layers">
+                <button type="button" id="hunt-public" aria-pressed="true">Public land</button>
+                <button type="button" id="hunt-parcels" aria-pressed="false">Parcels</button>
+                <button type="button" id="hunt-trail" aria-pressed="false">Trailhead</button>
+              </div>
+              <div class="hunt-map" id="huntMap" aria-label="Demo hunt map">
+                <div class="parcel" id="p1" style="left:12%;top:18%;width:34%;height:28%;" aria-pressed="true" role="button" tabindex="0"></div>
+                <div class="parcel" id="p2" style="left:52%;top:12%;width:30%;height:22%;" aria-pressed="false" role="button" tabindex="0"></div>
+                <div class="parcel" id="p3" style="left:40%;top:48%;width:38%;height:32%;" aria-pressed="false" role="button" tabindex="0"></div>
+                <div class="you-pin" title="You"></div>
+              </div>
+              <div class="hunt-meta" aria-live="polite">
+                <div><strong id="huntLayer">Layer · Public land</strong></div>
+                <div id="huntParcel">Parcel A · State wildlife area · walk-in access</div>
+                <div id="huntNote" class="eta">Stay on marked public land. Verify local rules before you go.</div>
+              </div>
+              <button type="button" class="msg-btn" id="huntPin">Drop a waypoint</button>
+              <p class="explain" id="huntExplain" hidden>In the app, waypoints sync to your field kit so you can find the spot again.</p>
+            </div>
+          </div>
+          <a class="play-cta" href="https://play.google.com/store/apps/details?id=com.yourworld.hunt" target="_blank" rel="noopener">
+  <svg class="play-icon" viewBox="0 0 28 28" aria-hidden="true"><path fill="#1ee0c6" d="M5 3.5v21l18-10.5L5 3.5z"/><path fill="#7eb6ff" d="M5 3.5l12.2 9.2L23 13.5 5 3.5z" opacity=".85"/></svg>
+  <span class="play-copy"><small>Get it on</small><strong>Google Play · Hunt AI</strong></span>
+</a>
+        </div>
+        <div class="copy-col">
+          <ul class="bullets">
+            <li>See public land and parcel context before you lace up</li>
+            <li>Field-first tools built for hunters who navigate for real</li>
+            <li>Built by Your World Apps — same dark, map-first DNA as Weather Radar</li>
+          </ul>
+        </div>
+      </div>
+      <div class="station-foot">
+        <a class="play-cta" href="https://play.google.com/store/apps/details?id=com.yourworld.hunt" target="_blank" rel="noopener">
+  <svg class="play-icon" viewBox="0 0 28 28" aria-hidden="true"><path fill="#1ee0c6" d="M5 3.5v21l18-10.5L5 3.5z"/><path fill="#7eb6ff" d="M5 3.5l12.2 9.2L23 13.5 5 3.5z" opacity=".85"/></svg>
+  <span class="play-copy"><small>Get it on</small><strong>Google Play · Hunt AI</strong></span>
+</a>
+      </div>
+    </article>
+
+    <!-- MARKET -->
+    <article class="station market" id="market" aria-labelledby="mkt-title">
+      <div class="station-head">
+        <img src="assets/market-icon.png" width="56" height="56" alt="">
+        <div>
+          <span class="station-tag">Station MKT-01 · Production</span>
+          <h2 id="mkt-title">Your World Market</h2>
+          <p class="pitch">Your markets companion under Your World Apps — scan the tape, surface the move, decide with a cleaner signal.</p>
+        </div>
+      </div>
+      <div class="station-body">
+        <div class="demo-col">
+          <p class="demo-note">Interactive demo — sample symbols only, not live quotes or advice.</p>
+          <div class="phone-frame">
+            <div class="notch" aria-hidden="true"></div>
+            <div class="phone-screen">
+              <div class="phone-top"><span>Market</span><span class="tag">Demo</span></div>
+              <div class="chips" role="group" aria-label="Watchlist">
+                <button type="button" id="sym-spy" aria-pressed="true">SPY</button>
+                <button type="button" id="sym-qqq" aria-pressed="false">QQQ</button>
+                <button type="button" id="sym-iwm" aria-pressed="false">IWM</button>
+              </div>
+              <div class="ticker" aria-hidden="true">
+                <div class="ticker-track" id="tickerTrack">
+                  <div class="tick up"><span class="sym">SPY</span> 528.40 <span class="chg">+0.6%</span></div>
+                  <div class="tick down"><span class="sym">QQQ</span> 447.12 <span class="chg">−0.3%</span></div>
+                  <div class="tick up"><span class="sym">IWM</span> 201.88 <span class="chg">+0.9%</span></div>
+                  <div class="tick up"><span class="sym">SPY</span> 528.40 <span class="chg">+0.6%</span></div>
+                  <div class="tick down"><span class="sym">QQQ</span> 447.12 <span class="chg">−0.3%</span></div>
+                  <div class="tick up"><span class="sym">IWM</span> 201.88 <span class="chg">+0.9%</span></div>
+                </div>
+              </div>
+              <div class="chart" aria-hidden="true">
+                <svg viewBox="0 0 320 110" preserveAspectRatio="none" id="mktChart">
+                  <polyline id="mktLine" fill="none" stroke="#7eb6ff" stroke-width="2.5" points=""></polyline>
+                  <circle id="mktDot" r="4" fill="#1ee0c6"></circle>
+                </svg>
+              </div>
+              <div class="insight" aria-live="polite">
+                <strong id="mktSym">SPY · Demo</strong>
+                <p class="msg" id="mktInsight" style="margin-top:4px">Session bias: constructive. Pullbacks toward VWAP are the demo “watch” zone.</p>
+              </div>
+              <button type="button" class="msg-btn" id="mktPulse">Run pulse check</button>
+              <p class="explain" id="mktExplain" hidden>In the app, pulse checks summarize momentum and risk in plain language — always demo-safe here.</p>
+            </div>
+          </div>
+          <a class="play-cta" href="https://play.google.com/store/apps/details?id=com.yourworld.analyzer" target="_blank" rel="noopener">
+  <svg class="play-icon" viewBox="0 0 28 28" aria-hidden="true"><path fill="#1ee0c6" d="M5 3.5v21l18-10.5L5 3.5z"/><path fill="#7eb6ff" d="M5 3.5l12.2 9.2L23 13.5 5 3.5z" opacity=".85"/></svg>
+  <span class="play-copy"><small>Get it on</small><strong>Google Play · Your World Market</strong></span>
+</a>
+        </div>
+        <div class="copy-col">
+          <ul class="bullets">
+            <li>Watchlists and analysis framing without drowning in noise</li>
+            <li>Built for traders and curious investors who want a companion, not a casino</li>
+            <li>Same Your World Apps polish — dark UI, clear calls, Android-first</li>
+          </ul>
+          <p class="demo-note" style="margin-top:10px">Informational only — not investment advice.</p>
+        </div>
+      </div>
+      <div class="station-foot">
+        <a class="play-cta" href="https://play.google.com/store/apps/details?id=com.yourworld.analyzer" target="_blank" rel="noopener">
+  <svg class="play-icon" viewBox="0 0 28 28" aria-hidden="true"><path fill="#1ee0c6" d="M5 3.5v21l18-10.5L5 3.5z"/><path fill="#7eb6ff" d="M5 3.5l12.2 9.2L23 13.5 5 3.5z" opacity=".85"/></svg>
+  <span class="play-copy"><small>Get it on</small><strong>Google Play · Your World Market</strong></span>
+</a>
+      </div>
+    </article>
+  </div>
+
+  <div class="trust">
+    <span>Developer · Your World Apps</span>
+    <span>Android · Google Play</span>
+    <span>3 Production apps on this deck</span>
+  </div>
+
+  <footer>
+    <p><strong>Your World Apps</strong> — weather, hunt, and markets on one command deck.</p>
+    <p>
+      <a href="https://appzdj2003-svg.github.io/your-world-weather-radar-site/">Weather Radar site</a>
+      ·
+      <a href="https://play.google.com/store/apps/details?id=com.yourworld.weatheranalyzer">Weather Play</a>
+      ·
+      <a href="https://play.google.com/store/apps/details?id=com.yourworld.hunt">Hunt Play</a>
+      ·
+      <a href="https://play.google.com/store/apps/details?id=com.yourworld.analyzer">Market Play</a>
+    </p>
+    <p>Listings and features update over time. Demos on this page are illustrative and not live data.</p>
+  </footer>
+</main>
+
+<script>
+(function () {
+  var scenarios = {
+    rain: {
+      alert: "Rain is headed toward Mom. Close enough to check in.",
+      eta: "Rain ETA · about 25 minutes",
+      who: "To Mom",
+      msg: "Storm is close to you. I'm checking in. Stay inside if you can.",
+      blob: { x: "62%", y: "40%", s: "78px", c: "#3ec6ff" }
+    },
+    hurricane: {
+      alert: "A hurricane track is nearing Alex. Weather can turn dangerous.",
+      eta: "Closest approach · tonight",
+      who: "To Alex",
+      msg: "The hurricane is getting close to you. I'm checking in. Stay inside if you can.",
+      blob: { x: "34%", y: "58%", s: "120px", c: "#ff6a45" }
+    },
+    lightning: {
+      alert: "Lightning is near Sam. Waiting indoors is the safer call.",
+      eta: "Lightning nearby · now",
+      who: "To Sam",
+      msg: "Lightning is close to you. I'm checking in. Stay inside if you can.",
+      blob: { x: "70%", y: "30%", s: "52px", c: "#f6e27a" }
+    }
+  };
+  var alertEl = document.getElementById("alert");
+  var etaEl = document.getElementById("eta");
+  var whoEl = document.getElementById("who");
+  var msgEl = document.getElementById("msg");
+  var draftEl = document.getElementById("draft");
+  var readyLabel = document.getElementById("readyLabel");
+  var explain = document.getElementById("explain");
+  var blob = document.getElementById("blob");
+  var chips = {
+    rain: document.getElementById("chip-rain"),
+    hurricane: document.getElementById("chip-hurricane"),
+    lightning: document.getElementById("chip-lightning")
+  };
+  function clearReady() {
+    draftEl.classList.remove("ready");
+    readyLabel.hidden = true;
+    explain.hidden = true;
+  }
+  function paint(key) {
+    var data = scenarios[key];
+    alertEl.textContent = data.alert;
+    etaEl.textContent = data.eta;
+    whoEl.textContent = data.who;
+    msgEl.textContent = data.msg;
+    blob.style.setProperty("--x", data.blob.x);
+    blob.style.setProperty("--y", data.blob.y);
+    blob.style.setProperty("--s", data.blob.s);
+    blob.style.setProperty("--c", data.blob.c);
+    Object.keys(chips).forEach(function (name) {
+      chips[name].setAttribute("aria-pressed", name === key ? "true" : "false");
+    });
+    clearReady();
+  }
+  Object.keys(chips).forEach(function (name) {
+    chips[name].addEventListener("click", function () { paint(name); });
+  });
+  document.getElementById("openMsg").addEventListener("click", function () {
+    draftEl.classList.add("ready");
+    readyLabel.hidden = false;
+    explain.hidden = false;
+  });
+  paint("rain");
+})();
+
+(function () {
+  var parcels = {
+    p1: { title: "Parcel A · State wildlife area · walk-in access", note: "Public land overlay. Confirm season dates and local regs." },
+    p2: { title: "Parcel B · Adjacent timber · check boundary", note: "Demo parcel edge. Always respect posted private land." },
+    p3: { title: "Parcel C · Creek bottom · high-traffic trail", note: "Good orientation landmark. Pack out what you pack in." }
+  };
+  var layers = {
+    "hunt-public": { label: "Layer · Public land", focus: "p1" },
+    "hunt-parcels": { label: "Layer · Parcels", focus: "p2" },
+    "hunt-trail": { label: "Layer · Trailhead", focus: "p3" }
+  };
+  var layerEl = document.getElementById("huntLayer");
+  var parcelEl = document.getElementById("huntParcel");
+  var noteEl = document.getElementById("huntNote");
+  var explain = document.getElementById("huntExplain");
+
+  function selectParcel(id) {
+    Object.keys(parcels).forEach(function (pid) {
+      var el = document.getElementById(pid);
+      el.setAttribute("aria-pressed", pid === id ? "true" : "false");
+    });
+    parcelEl.textContent = parcels[id].title;
+    noteEl.textContent = parcels[id].note;
+  }
+  Object.keys(parcels).forEach(function (pid) {
+    var el = document.getElementById(pid);
+    el.addEventListener("click", function () { selectParcel(pid); });
+    el.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); selectParcel(pid); }
+    });
+  });
+  Object.keys(layers).forEach(function (lid) {
+    document.getElementById(lid).addEventListener("click", function () {
+      Object.keys(layers).forEach(function (other) {
+        document.getElementById(other).setAttribute("aria-pressed", other === lid ? "true" : "false");
+      });
+      layerEl.textContent = layers[lid].label;
+      selectParcel(layers[lid].focus);
+      explain.hidden = true;
+    });
+  });
+  document.getElementById("huntPin").addEventListener("click", function () {
+    explain.hidden = false;
+    noteEl.textContent = "Waypoint dropped (demo). In the field kit it would save to your map.";
+  });
+})();
+
+(function () {
+  var symbols = {
+    spy: {
+      label: "SPY · Demo",
+      insight: "Session bias: constructive. Pullbacks toward VWAP are the demo “watch” zone.",
+      points: [20,70, 45,62, 70,66, 95,48, 120,52, 145,40, 170,44, 195,30, 220,36, 245,28, 270,32, 295,22]
+    },
+    qqq: {
+      label: "QQQ · Demo",
+      insight: "Tech tape: mixed. Demo flag = wait for reclaim of the morning high.",
+      points: [20,30, 45,38, 70,34, 95,50, 120,46, 145,58, 170,54, 195,68, 220,60, 245,72, 270,66, 295,78]
+    },
+    iwm: {
+      label: "IWM · Demo",
+      insight: "Small-cap pulse: firm. Demo breadth looks healthier than the majors.",
+      points: [20,80, 45,74, 70,70, 95,62, 120,64, 145,50, 170,46, 195,40, 220,36, 245,30, 270,34, 295,24]
+    }
+  };
+  var line = document.getElementById("mktLine");
+  var dot = document.getElementById("mktDot");
+  var symEl = document.getElementById("mktSym");
+  var insightEl = document.getElementById("mktInsight");
+  var explain = document.getElementById("mktExplain");
+  var chipMap = {
+    spy: document.getElementById("sym-spy"),
+    qqq: document.getElementById("sym-qqq"),
+    iwm: document.getElementById("sym-iwm")
+  };
+  function paint(key) {
+    var data = symbols[key];
+    var pts = data.points;
+    var pairs = [];
+    for (var i = 0; i < pts.length; i += 2) pairs.push(pts[i] + "," + pts[i + 1]);
+    line.setAttribute("points", pairs.join(" "));
+    dot.setAttribute("cx", pts[pts.length - 2]);
+    dot.setAttribute("cy", pts[pts.length - 1]);
+    symEl.textContent = data.label;
+    insightEl.textContent = data.insight;
+    Object.keys(chipMap).forEach(function (name) {
+      chipMap[name].setAttribute("aria-pressed", name === key ? "true" : "false");
+    });
+    explain.hidden = true;
+  }
+  Object.keys(chipMap).forEach(function (name) {
+    chipMap[name].addEventListener("click", function () { paint(name); });
+  });
+  document.getElementById("mktPulse").addEventListener("click", function () {
+    explain.hidden = false;
+    insightEl.textContent = insightEl.textContent.replace(/\.$/, "") + " · Pulse check complete (demo).";
+  });
+  paint("spy");
+})();
+</script>
+</body>
+</html>
