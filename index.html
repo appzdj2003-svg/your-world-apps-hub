@@ -607,6 +607,40 @@
   }
   .station-foot .play-cta { max-width: none; }
 
+  /* Weather Radar review ask */
+  .review-ask {
+    margin-top: 16px;
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: var(--panel-2);
+    scroll-margin-top: 96px;
+  }
+  .review-ask h3 {
+    margin: 0 0 6px;
+    font-size: 1.05rem;
+    letter-spacing: -0.01em;
+  }
+  .review-ask p { margin: 0 0 12px; color: var(--muted); font-size: 0.92rem; }
+  .review-ask .review-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px;
+  }
+  .review-ask img.qr {
+    display: block;
+    width: 140px;
+    height: 140px;
+    border-radius: 10px;
+    background: #fff;
+    padding: 6px;
+    flex-shrink: 0;
+  }
+  .review-ask .review-side { flex: 1 1 160px; min-width: 0; }
+  .review-ask .review-side .btn { width: 100%; }
+  .review-ask .qr-hint { margin: 8px 0 0; font-size: 0.82rem; }
+
   /* Trust + footer */
   .trust {
     margin-top: 32px;
@@ -814,6 +848,18 @@
             <li>Free for rain ETA and basic radar · Premium unlocks Close-One and advanced layers</li>
           </ul>
           <p class="demo-note" style="margin-top:10px">Want the deep dive? <a href="https://appzdj2003-svg.github.io/your-world-weather-radar-site/">Weather Radar detail site</a></p>
+          <section class="review-ask" id="weather-review" aria-labelledby="wx-review-title">
+            <p class="kicker">Using Weather Radar?</p>
+            <h3 id="wx-review-title">Enjoying Your World Weather Radar?</h3>
+            <p>Your review on Google Play helps other people find it and tells us what to improve.</p>
+            <div class="review-row">
+              <img class="qr" src="assets/qr/weather-radar-play-review.png" width="140" height="140" alt="QR code that opens the Your World Weather Radar reviews page on Google Play">
+              <div class="review-side">
+                <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.yourworld.weatheranalyzer&amp;showAllReviews=true" target="_blank" rel="noopener">Review on Google Play</a>
+                <p class="qr-hint">Or scan the code with your Android phone to open the reviews page.</p>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
       <div class="station-foot">
