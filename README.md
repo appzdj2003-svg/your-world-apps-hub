@@ -1,6 +1,6 @@
 # Your World Apps — Command Deck
 
-Marketing hub for **Your World Apps** Production titles. The page *is* the command deck: Weather Radar, Hunt AI, and Your World Market are stations with interactive demos, sales copy, and Google Play CTAs.
+Marketing hub for **Your World Apps** Production titles. The page *is* the command deck: Weather Radar, Your World Hunt, and Your World Market are stations with interactive demos, sales copy, and Google Play CTAs.
 
 ## Local preview
 
@@ -25,7 +25,7 @@ Host like the weather site: push this folder to a repo (or `/docs`) and enable P
 | Station | Package | Play |
 |--------|---------|------|
 | Weather Radar | `com.yourworld.weatheranalyzer` | [Play](https://play.google.com/store/apps/details?id=com.yourworld.weatheranalyzer) |
-| Hunt AI | `com.yourworld.hunt` | [Play](https://play.google.com/store/apps/details?id=com.yourworld.hunt) |
+| Your World Hunt | `com.yourworld.hunt` | [Play](https://play.google.com/store/apps/details?id=com.yourworld.hunt) |
 | Your World Market | `com.yourworld.analyzer` | [Play](https://play.google.com/store/apps/details?id=com.yourworld.analyzer) |
 
 Closed/draft apps are intentionally omitted.
