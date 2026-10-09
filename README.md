@@ -14,9 +14,13 @@ firefox /workspace/your-world-apps-hub/index.html
 
 Single self-contained `index.html` (embedded CSS/JS) plus `assets/` icons. No build step.
 
-## GitHub Pages
+## GitHub Pages + custom domain
 
-Host like the weather site: push this folder to a repo (or `/docs`) and enable Pages. Example pattern:
+Live at **https://yourworldapps.si/** (`www.yourworldapps.si` redirects there). Served by GitHub Pages from `main` with the
+custom domain in the `CNAME` file; DNS at Spaceship: apex A records 185.199.108-111.153, `www` and `hunt` CNAME to
+`appzdj2003-svg.github.io`. The old https://appzdj2003-svg.github.io/your-world-apps-hub/ URL redirects here.
+
+- Your World Hunt site: https://hunt.yourworldapps.si/ (repo `your-world-hunt-site`)
 
 - Weather detail site: https://appzdj2003-svg.github.io/your-world-weather-radar-site/
 
