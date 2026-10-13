@@ -665,6 +665,9 @@
     text-align: center;
   }
   footer p { margin: 6px 0; }
+  .support { display:flex; flex-direction:column; align-items:center; gap:10px; margin:0 0 22px; padding:0 0 22px; border-bottom:1px solid var(--line, #2E2B52); }
+  .support-label { margin:0; font-size:.78rem; letter-spacing:.14em; text-transform:uppercase; color:var(--mute, #A9A3C7); }
+  .support .btn { gap:8px; }
   .sr-only {
     position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
     overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
@@ -1062,6 +1065,10 @@
   </div>
 
   <footer>
+    <div class="support">
+      <p class="support-label">Questions or feedback?</p>
+      <a class="btn btn-primary" href="mailto:support@yourworldapps.si">✉ support@yourworldapps.si</a>
+    </div>
     <p><strong>Your World Apps</strong> — weather, hunt, and markets on one command deck.</p>
     <p>
       <a href="https://weather.yourworldapps.si/">Weather Radar site</a>
