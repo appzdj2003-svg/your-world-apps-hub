@@ -789,6 +789,11 @@
   .station.weather .btn-primary { background: var(--wx); color: var(--ink); }
   .btn-hunt, .btn-market { color: var(--ink); }
   .wx-trust { margin: 10px 0 0; font-size: 0.88rem; color: var(--text); }
+  .wx-site-cta { display:inline-flex; align-items:center; gap:10px; margin-top:14px; padding:12px 20px; border-radius:999px; font-weight:700; font-size:1rem; text-decoration:none; color:var(--ink); background:linear-gradient(135deg,var(--wx),var(--violet)); box-shadow:0 6px 22px rgba(56,189,248,.35); transition:transform .15s ease, box-shadow .15s ease; }
+  .wx-site-cta:hover, .wx-site-cta:focus-visible { transform:translateY(-2px); box-shadow:0 10px 28px rgba(139,124,255,.5); }
+  .wx-site-cta small { font-weight:500; opacity:.8; font-size:.8rem; }
+  .wx-site-cta.block { display:flex; justify-content:center; width:100%; box-sizing:border-box; }
+  @media (max-width:640px){ .wx-site-cta { display:flex; justify-content:center; width:100%; box-sizing:border-box; } }
   .mt-sm { margin-top: 10px; } .mt-xs { margin-top: 4px; }
   #p1 { left: 12%; top: 18%; width: 34%; height: 28%; }
   #p2 { left: 52%; top: 12%; width: 30%; height: 22%; }
@@ -849,6 +854,7 @@
           <span class="station-tag">Station WX-01 · Production</span>
           <h2 id="wx-title">Your World Weather Radar</h2>
           <p class="pitch">Beat big weather apps on early warning — then text someone who matters when storms hit. Rain ETA stays free. Close-One, tides, launches, and aircraft are Premium layers.</p>
+          <a class="wx-site-cta" href="https://weather.yourworldapps.si/?utm_source=appshub&amp;utm_medium=cta&amp;utm_campaign=wx_top">Explore Weather Radar →</a>
         </div>
       </div>
       <div class="station-body">
@@ -896,7 +902,7 @@
             <li>Radar, storms, tides/swell, launches, and aircraft overlays on one map</li>
             <li>Free for rain ETA and basic radar · Premium unlocks Close-One and advanced layers</li>
           </ul>
-          <p class="demo-note mt-sm">Want the deep dive? <a href="https://weather.yourworldapps.si/">Weather Radar detail site</a></p>
+          <a class="wx-site-cta block" href="https://weather.yourworldapps.si/?utm_source=appshub&amp;utm_medium=cta&amp;utm_campaign=wx_deepdive">Want the deep dive? Explore Weather Radar →</a>
           <p class="wx-trust">No account needed. No ads of our own. No tracking SDKs.</p>
           <section class="review-ask" id="weather-review" aria-labelledby="wx-review-title">
             <p class="kicker">Using Weather Radar?</p>
