@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Getting started with Your World Market Analyzer (and what the signal rail is not) | Your World Apps Blog</title>
+<meta name="description" content="Set up your watchlist, connect a free Finnhub key, read the command deck, and understand why BUY/SELL labels are experimental displays, not advice.">
+<link rel="canonical" href="https://yourworldapps.si/blog/getting-started-with-market-analyzer/">
+<link rel="icon" href="/assets/yw-apps-icon.png" type="image/png">
+<link rel="alternate" type="application/rss+xml" title="Your World Apps Blog" href="https://yourworldapps.si/blog/feed.xml">
+<meta property="og:title" content="Getting started with Your World Market Analyzer (and what the signal rail is not) | Your World Apps Blog">
+<meta property="og:description" content="Set up your watchlist, connect a free Finnhub key, read the command deck, and understand why BUY/SELL labels are experimental displays, not advice.">
+<meta property="og:url" content="https://yourworldapps.si/blog/getting-started-with-market-analyzer/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://yourworldapps.si/assets/og-hub.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Getting started with Your World Market Analyzer (and what the signal rail is not) | Your World Apps Blog">
+<meta name="twitter:description" content="Set up your watchlist, connect a free Finnhub key, read the command deck, and understand why BUY/SELL labels are experimental displays, not advice.">
+<meta name="twitter:image" content="https://yourworldapps.si/assets/og-hub.jpg">
+<link rel="stylesheet" href="/blog/assets/blog.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Getting started with Your World Market Analyzer (and what the signal rail is not)", "description": "Set up your watchlist, connect a free Finnhub key, read the command deck, and understand why BUY/SELL labels are experimental displays, not advice.", "datePublished": "2026-10-13", "dateModified": "2026-10-13", "mainEntityOfPage": "https://yourworldapps.si/blog/getting-started-with-market-analyzer/", "image": "https://yourworldapps.si/assets/og-hub.jpg", "author": {"@type": "Organization", "name": "Your World Apps", "url": "https://yourworldapps.si/"}, "publisher": {"@type": "Organization", "name": "Your World Apps", "logo": {"@type": "ImageObject", "url": "https://yourworldapps.si/assets/yw-apps-icon.png"}}, "about": "Your World Market Analyzer"}</script>
+<script defer data-domain="yourworldapps.si" src="https://plausible.io/js/script.outbound-links.js"></script>
+</head>
+<body>
+<header class="deck-bar">
+  <a class="brand" href="/"><img src="/assets/yw-apps-icon-72.png" width="36" height="36" alt="">Your World Apps</a>
+  <nav class="deck-nav" aria-label="Site">
+    <a class="app" href="/#weather">Weather</a>
+    <a class="app" href="/#hunt">Hunt</a>
+    <a class="app" href="/#market">Market</a>
+    <a href="/blog/" aria-current="page">Blog</a>
+    <a class="cta-mini" href="https://play.google.com/store/apps/details?id=com.yourworld.weatheranalyzer&amp;referrer=utm_source%3Dappshub%26utm_medium%3Dweatheranalyzer%26utm_campaign%3Dblog">Get Weather Radar</a>
+  </nav>
+</header>
+<main>
+<article class="article t-market">
+  <nav class="crumb" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/blog/">Blog</a> / <span aria-current="page">Market</span></nav>
+  <header class="article-head">
+    <div class="meta"><span class="tag">Market</span><time datetime="2026-10-13">October 13, 2026</time><span>3 min read</span></div>
+    <h1>Getting started with Your World Market Analyzer (and what the signal rail is not)</h1>
+  </header>
+  <div class="listen" id="listen" role="group" aria-label="Listen to this article" hidden>
+    <button type="button" class="l-play" aria-pressed="false"><i aria-hidden="true">▶</i><span>Listen</span></button>
+    <button type="button" class="l-stop" disabled>■ Stop</button>
+    <label>Speed <select class="l-rate"><option value="0.75">0.75x</option><option value="1" selected>1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option></select></label>
+    <div class="l-progress" aria-hidden="true"><span></span></div>
+    <p class="l-status" aria-live="polite">Listen uses your browser's built-in voice.</p>
+  </div>
+  <div class="article-body">
+<p class="note"><strong>Not financial advice.</strong> Your World Market Analyzer is not a broker and doesn't place orders. Scores, locks and BUY / SELL labels are experimental displays for exploration only, not recommendations to buy, sell or hold anything.</p>
+<p>Your World Market Analyzer is a cinematic command deck for watching US stocks, ETFs and crypto alongside public headlines. It is built to look great on a big foldable, and it works on any phone. This guide covers the first ten minutes: getting live data, building your watchlist, and knowing what you're looking at.</p>
+<h2>Demo mode vs live data</h2>
+<p>Out of the box, the app runs a clearly labeled <strong>DEMO</strong> feed, so you can explore before setting anything up. In demo mode the prices are simulated and the headlines are synthetic, and the connection chip reads DEMO. Nothing you see in demo mode reflects real markets.</p>
+<p>For live quotes, the app uses Finnhub, and you bring your own free key:</p>
+<ol>
+<li>Create a free token at finnhub.io.</li>
+<li>In the app, tap <strong>SYS → TAPE</strong>.</li>
+<li>Paste the key and tap <strong>SAVE &amp; CONNECT</strong>.</li>
+</ol>
+<p>Your API keys and alert destinations stay on your device.</p>
+<h2>Build your watchlist</h2>
+<p>Open <strong>SYS → WATCH</strong> to add or remove symbols. The default list is the S&amp;P 100 plus seven coins: BTC, ETH, SOL, XRP, DOGE, LTC and BCH. You can hold up to 150 symbols, and <strong>RESET TO DEFAULT</strong> puts the original list back. A shorter list focused on what you actually follow is usually easier to read.</p>
+<h2>A quick tour of the deck</h2>
+<ul>
+<li><strong>Live ticker:</strong> each symbol shows its session price and percent change. After the close, equities also show an after-hours (AH) or pre-market (PRE) last print under the session close. Crypto trades around the clock and stays on its main price.</li>
+<li><strong>World scan:</strong> a wireframe globe with scanning arcs and region hits when headlines land. Turn on <strong>STREAM</strong> to play YouTube market and sports live streams in the monitor instead.</li>
+<li><strong>Keyword intel:</strong> public headlines, each card labeled with its source, scored as bullish or bearish by keyword.</li>
+<li><strong>Signal rail:</strong> a rolling score that builds toward BUY or SELL, flashes, then locks a call. More on this below.</li>
+</ul>
+<p>On a tablet in landscape you get a two-monitor layout; on phones the panes stack.</p>
+<h2>What the signal rail actually is</h2>
+<p>The rail is the most eye-catching part of the deck, so it's worth being clear about it. The score comes from simple, public inputs: headlines scored by keyword lists (words like <em>upgrade</em>, <em>beat</em> or <em>buyback</em> versus <em>recall</em>, <em>downgrade</em> or <em>bankruptcy</em>), official SEC filings and company facts, Finnhub earnings surprises when a key is set, and short-term price movement.</p>
+<p>That makes it a fun way to see how the news flow is leaning, and nothing more. A keyword can't tell sarcasm from fact, a headline can be old news, and a short-term move can reverse in minutes. A locked BUY or SELL is not a prediction, a recommendation or a reason to trade. Use it as a starting point for your own research, never as the research itself.</p>
+<h2>Alerts and keeping the deck live</h2>
+<p>The app can alert you with push notifications, optional email, or an optional SMS draft. The SMS option opens your phone's Messages app with the text filled in, and you decide whether to tap Send. <strong>SYS → ALERTS → KEEP DECK LIVE</strong> holds a foreground notification so scoring and alerts can continue with the screen off. Some phones' battery settings may still pause background work.</p>
+<h2>Good habits</h2>
+<ul>
+<li>Check that the connection chip shows live data, not DEMO, before reading anything into prices.</li>
+<li>Tap through to the source of any headline that matters to you.</li>
+<li>Remember that third-party services (Finnhub, YouTube, RSS feeds, optional X and Reddit) have their own terms and can be delayed or down.</li>
+<li>Make decisions with information you've verified yourself, and talk to a licensed professional if you need advice.</li>
+</ul>
+<aside class="disclaimer" data-read="true"><p><strong>Disclaimer:</strong> Your World Market Analyzer is for information and entertainment only. It is not financial advice and not a broker. Scores, locks and BUY / SELL labels are experimental displays, not recommendations to buy, sell or hold any security or crypto asset. You are solely responsible for your own trading decisions. Consult a licensed professional if you need advice.</p></aside>
+  </div>
+  <section class="cta" aria-labelledby="cta-title">
+    <h2 id="cta-title">Try Your World Market Analyzer</h2>
+    <p>Live markets, crypto & headlines on a Fold-ready command deck. Not advice.</p>
+    <a class="btn btn-app" href="https://play.google.com/store/apps/details?id=com.yourworld.analyzer&amp;referrer=utm_source%3Dappshub%26utm_medium%3Danalyzer%26utm_campaign%3Dblog" target="_blank" rel="noopener">Get it on Google Play</a>
+  </section>
+  <p class="crumb"><a href="/blog/">← All posts</a></p>
+</article>
+</main>
+<script src="/blog/assets/listen.js" defer></script>
+<footer>
+  <div class="support">
+    <p class="support-label">Questions or feedback?</p>
+    <a class="btn btn-primary" href="mailto:support@yourworldapps.si">✉ support@yourworldapps.si</a>
+  </div>
+  <p><strong>Your World Apps</strong> — weather, hunt, and markets on one command deck.</p>
+  <p><a href="/">Home</a> · <a href="/blog/">Blog</a> · <a href="https://weather.yourworldapps.si/">Weather Radar site</a> · <a href="https://hunt.yourworldapps.si/">Hunt site</a> · <a href="https://play.google.com/store/apps/details?id=com.yourworld.weatheranalyzer&amp;referrer=utm_source%3Dappshub%26utm_medium%3Dweatheranalyzer%26utm_campaign%3Dblog">Weather Play</a> · <a href="https://play.google.com/store/apps/details?id=com.yourworld.hunt&amp;referrer=utm_source%3Dappshub%26utm_medium%3Dhunt%26utm_campaign%3Dblog">Hunt Play</a> · <a href="https://play.google.com/store/apps/details?id=com.yourworld.analyzer&amp;referrer=utm_source%3Dappshub%26utm_medium%3Danalyzer%26utm_campaign%3Dblog">Market Play</a></p>
+  <p>Posts are general information. Features and pricing can change; Google Play shows current details.</p>
+</footer>
+</body>
+</html>

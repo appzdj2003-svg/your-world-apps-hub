@@ -7,6 +7,7 @@
 <link rel="icon" href="assets/yw-apps-icon.png" type="image/png">
 <link rel="apple-touch-icon" href="assets/yw-apps-icon.png">
 <link rel="canonical" href="https://yourworldapps.si/">
+<link rel="alternate" type="application/rss+xml" title="Your World Apps Blog" href="https://yourworldapps.si/blog/feed.xml">
 <meta name="description" content="Your World Apps command deck: Weather Radar early storm alerts and Close-One, Your World Hunt public-land maps, and Your World Market Analyzer. Get them on Google Play.">
 <meta property="og:title" content="Your World Apps — Command Deck">
 <meta property="og:description" content="Your World Apps command deck: Weather Radar early storm alerts and Close-One, Your World Hunt public-land maps, and Your World Market Analyzer. Get them on Google Play.">
@@ -795,7 +796,7 @@
   .js .js-reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
   .js .js-reveal.in { opacity: 1; transform: none; }
   @media (max-width: 640px) {
-    .deck-nav a:not(.cta-mini) { display: none; }
+    .deck-nav a:not(.cta-mini):not(.blog-link) { display: none; }
     .hero-copy { padding-top: 84px; }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -818,6 +819,7 @@
     <a href="#weather">Weather</a>
     <a href="#hunt">Hunt</a>
     <a href="#market">Market</a>
+    <a class="blog-link" href="/blog/">Blog</a>
     <a class="cta-mini" href="https://play.google.com/store/apps/details?id=com.yourworld.weatheranalyzer&amp;referrer=utm_source%3Dappshub%26utm_medium%3Dweatheranalyzer%26utm_campaign%3Dnav">Get Weather Radar</a>
   </nav>
 </header>
@@ -1071,6 +1073,8 @@
     </div>
     <p><strong>Your World Apps</strong> — weather, hunt, and markets on one command deck.</p>
     <p>
+      <a href="/blog/">Blog</a>
+      ·
       <a href="https://weather.yourworldapps.si/">Weather Radar site</a>
       ·
       <a href="https://play.google.com/store/apps/details?id=com.yourworld.weatheranalyzer&amp;referrer=utm_source%3Dappshub%26utm_medium%3Dweatheranalyzer%26utm_campaign%3Dfooter">Weather Play</a>
