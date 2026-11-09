@@ -29,7 +29,7 @@ custom domain in the `CNAME` file; DNS at Spaceship: apex A records 185.199.108-
 | Station | Package | Play |
 |--------|---------|------|
 | Weather Radar | `com.yourworld.weatheranalyzer` | [Play](https://play.google.com/store/apps/details?id=com.yourworld.weatheranalyzer) |
-| Your World Hunt | `com.yourworld.hunt` | [Play](https://play.google.com/store/apps/details?id=com.yourworld.hunt) |
+| Your World Hunt | `com.yourworld.hunt` | [Play](https://play.google.com/store/apps/details?id=com.yourworld.hunt) · [App Store](https://apps.apple.com/app/id6822549497) |
 | Your World Market | `com.yourworld.analyzer` | [Play](https://play.google.com/store/apps/details?id=com.yourworld.analyzer) |
 
 Closed/draft apps are intentionally omitted.
